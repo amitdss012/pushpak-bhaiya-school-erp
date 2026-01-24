@@ -7,12 +7,30 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 // Pages
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+
+// Reception
+import VisitEnquiry from "./pages/reception/VisitEnquiry";
+import VisitorsInformation from "./pages/reception/VisitorsInformation";
+import ItemDispatch from "./pages/reception/ItemDispatch";
+import ItemReceive from "./pages/reception/ItemReceive";
+
+// Student Management
 import ViewStudents from "./pages/student/ViewStudents";
 import AddStudent from "./pages/student/AddStudent";
+
+// Fee Management
 import FeeCollection from "./pages/fee/FeeCollection";
+
+// Course Management
 import ViewCourses from "./pages/course/ViewCourses";
+
+// Exam Management
 import ExamSchedule from "./pages/exam/ExamSchedule";
+
+// Cards
 import IDCardTemplate from "./pages/cards/IDCardTemplate";
+
+// Settings
 import GeneralSettings from "./pages/settings/GeneralSettings";
 
 const queryClient = new QueryClient();
@@ -26,6 +44,12 @@ const App = () => (
         <Routes>
           {/* Dashboard */}
           <Route path="/" element={<Index />} />
+          
+          {/* Reception Management */}
+          <Route path="/reception/enquiry" element={<VisitEnquiry />} />
+          <Route path="/reception/visitors" element={<VisitorsInformation />} />
+          <Route path="/reception/dispatch" element={<ItemDispatch />} />
+          <Route path="/reception/receive" element={<ItemReceive />} />
           
           {/* Student Management */}
           <Route path="/student/view" element={<ViewStudents />} />
