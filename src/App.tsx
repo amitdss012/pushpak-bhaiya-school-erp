@@ -49,6 +49,20 @@ import AssignCourseToBatch from "./pages/course/AssignCourseToBatch";
 
 // Exam Management
 import ExamSchedule from "./pages/exam/ExamSchedule";
+import CreateExam from "./pages/exam/CreateExam";
+import AssignMarks from "./pages/exam/AssignMarks";
+import MarksList from "./pages/exam/MarksList";
+import GradeManagement from "./pages/exam/GradeManagement";
+
+// Online Exam
+import CreateOnlineExam from "./pages/online-exam/CreateOnlineExam";
+import QuestionPaperBuilder from "./pages/online-exam/QuestionPaperBuilder";
+import AddQuestions from "./pages/online-exam/AddQuestions";
+import OnlineExamMarks from "./pages/online-exam/OnlineExamMarks";
+
+// Live Class
+import ViewLiveClasses from "./pages/live-class/ViewLiveClasses";
+import LiveClassSetup from "./pages/live-class/LiveClassSetup";
 
 // Cards
 import IDCardTemplate from "./pages/cards/IDCardTemplate";
@@ -108,7 +122,21 @@ const App = () => (
           <Route path="/course/batch/assign" element={<AssignCourseToBatch />} />
           
           {/* Exam Management */}
+          <Route path="/exam/create" element={<CreateExam />} />
           <Route path="/exam/schedule" element={<ExamSchedule />} />
+          <Route path="/exam/assign-marks" element={<AssignMarks />} />
+          <Route path="/exam/marks-list" element={<MarksList />} />
+          <Route path="/exam/grade-management" element={<GradeManagement />} />
+          
+          {/* Online Exam */}
+          <Route path="/online-exam/create" element={<CreateOnlineExam />} />
+          <Route path="/online-exam/question-paper-builder" element={<QuestionPaperBuilder />} />
+          <Route path="/online-exam/add-questions" element={<AddQuestions />} />
+          <Route path="/online-exam/marks" element={<OnlineExamMarks />} />
+          
+          {/* Live Class */}
+          <Route path="/live-class/view" element={<ViewLiveClasses />} />
+          <Route path="/live-class/setup" element={<LiveClassSetup />} />
           
           {/* Cards */}
           <Route path="/cards/id-template" element={<IDCardTemplate />} />

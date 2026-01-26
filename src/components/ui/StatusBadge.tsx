@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-type StatusType = "active" | "inactive" | "pending" | "paid" | "due" | "partial" | "completed" | "cancelled" | "upcoming" | "new" | "contacted" | "interested" | "converted" | "closed" | "reviewed" | "responded" | "scheduled" | "visited" | "applied" | "approved" | "rejected" | "under_review" | "overdue" | "due_today" | "due_soon";
+type StatusType = "active" | "inactive" | "pending" | "paid" | "due" | "partial" | "completed" | "cancelled" | "upcoming" | "new" | "contacted" | "interested" | "converted" | "closed" | "reviewed" | "responded" | "scheduled" | "visited" | "applied" | "approved" | "rejected" | "under_review" | "overdue" | "due_today" | "due_soon" | "absent" | "in_progress";
 
 interface StatusBadgeProps {
   status: StatusType;
@@ -33,6 +33,8 @@ const statusStyles: Record<StatusType, string> = {
   overdue: "bg-destructive/10 text-destructive border-destructive/20",
   due_today: "bg-warning/10 text-warning border-warning/20",
   due_soon: "bg-info/10 text-info border-info/20",
+  absent: "bg-destructive/10 text-destructive border-destructive/20",
+  in_progress: "bg-info/10 text-info border-info/20",
 };
 
 const statusLabels: Record<StatusType, string> = {
@@ -61,6 +63,8 @@ const statusLabels: Record<StatusType, string> = {
   overdue: "Overdue",
   due_today: "Due Today",
   due_soon: "Due Soon",
+  absent: "Absent",
+  in_progress: "In Progress",
 };
 
 export function StatusBadge({ status, className }: StatusBadgeProps) {
