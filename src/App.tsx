@@ -66,6 +66,17 @@ import LiveClassSetup from "./pages/live-class/LiveClassSetup";
 
 // Cards
 import IDCardTemplate from "./pages/cards/IDCardTemplate";
+import GenerateIDCards from "./pages/cards/GenerateIDCards";
+import AdmitCardTemplate from "./pages/cards/AdmitCardTemplate";
+import GenerateAdmitCards from "./pages/cards/GenerateAdmitCards";
+
+// Certificates
+import CertificateTemplate from "./pages/certificate/CertificateTemplate";
+import GenerateCertificates from "./pages/certificate/GenerateCertificates";
+
+// Marksheets
+import MarksheetTemplate from "./pages/marksheet/MarksheetTemplate";
+import GenerateMarksheets from "./pages/marksheet/GenerateMarksheets";
 
 // Settings
 import GeneralSettings from "./pages/settings/GeneralSettings";
@@ -140,6 +151,17 @@ const App = () => (
           
           {/* Cards */}
           <Route path="/cards/id-template" element={<IDCardTemplate />} />
+          <Route path="/cards/generate-id" element={<GenerateIDCards />} />
+          <Route path="/cards/admit-template" element={<AdmitCardTemplate />} />
+          <Route path="/cards/generate-admit" element={<GenerateAdmitCards />} />
+          
+          {/* Certificates */}
+          <Route path="/certificate/template" element={<CertificateTemplate />} />
+          <Route path="/certificate/generate" element={<GenerateCertificates />} />
+          
+          {/* Marksheets */}
+          <Route path="/marksheet/template" element={<MarksheetTemplate />} />
+          <Route path="/marksheet/generate" element={<GenerateMarksheets />} />
           
           {/* Settings */}
           <Route path="/settings/general" element={<GeneralSettings />} />
