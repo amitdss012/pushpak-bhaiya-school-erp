@@ -79,8 +79,8 @@ const menuItems: MenuItem[] = [
       { title: "View Branch", url: "/branch/view", icon: Building2 },
       { title: "Wallet Recharge", url: "/branch/wallet", icon: Wallet },
       { title: "Branch Transactions", url: "/branch/transactions", icon: Receipt },
-      { title: "Notice Board", url: "/branch/notice", icon: Bell },
-      { title: "Website Settings", url: "/branch/website", icon: Globe },
+      { title: "Notice Board", url: "/branch/notice-board", icon: Bell },
+      { title: "Website Settings", url: "/branch/website-settings", icon: Globe },
     ],
   },
   {
@@ -100,7 +100,7 @@ const menuItems: MenuItem[] = [
       { title: "View Course", url: "/course/view", icon: BookOpen },
       { title: "Create Batch", url: "/course/batch/create", icon: School },
       { title: "Batch Timing", url: "/course/batch/timing", icon: Clock },
-      { title: "Assign Course to Batch", url: "/course/assign", icon: ListChecks },
+      { title: "Assign Course to Batch", url: "/course/batch/assign", icon: ListChecks },
     ],
   },
   {
@@ -109,7 +109,7 @@ const menuItems: MenuItem[] = [
     items: [
       { title: "Add Student", url: "/student/add", icon: UserPlus },
       { title: "View Students", url: "/student/view", icon: Users },
-      { title: "Online Admission List", url: "/student/online-admission", icon: Globe },
+      { title: "Online Admission List", url: "/student/online-admissions", icon: Globe },
       { title: "Admission Form", url: "/student/admission-form", icon: FileText },
     ],
   },
@@ -121,7 +121,7 @@ const menuItems: MenuItem[] = [
       { title: "Fee Groups", url: "/fee/groups", icon: ListChecks },
       { title: "Fee Allocation", url: "/fee/allocation", icon: Calendar },
       { title: "Fee Collection", url: "/fee/collection", icon: Receipt },
-      { title: "Due Fee Collection", url: "/fee/due", icon: CreditCard },
+      { title: "Due Fee Collection", url: "/fee/due-collection", icon: CreditCard },
     ],
   },
   {
@@ -130,9 +130,9 @@ const menuItems: MenuItem[] = [
     items: [
       { title: "Create Exam", url: "/exam/create", icon: PenTool },
       { title: "Exam Schedule", url: "/exam/schedule", icon: Calendar },
-      { title: "Assign Marks", url: "/exam/marks", icon: FileCheck },
+      { title: "Assign Marks", url: "/exam/assign-marks", icon: FileCheck },
       { title: "Marks List", url: "/exam/marks-list", icon: FileSpreadsheet },
-      { title: "Grade Management", url: "/exam/grades", icon: Award },
+      { title: "Grade Management", url: "/exam/grade-management", icon: Award },
     ],
   },
   {
@@ -140,8 +140,8 @@ const menuItems: MenuItem[] = [
     icon: Monitor,
     items: [
       { title: "Create Exam", url: "/online-exam/create", icon: PenTool },
-      { title: "Question Paper Builder", url: "/online-exam/paper-builder", icon: FileText },
-      { title: "Add Questions", url: "/online-exam/questions", icon: ListChecks },
+      { title: "Question Paper Builder", url: "/online-exam/question-paper-builder", icon: FileText },
+      { title: "Add Questions", url: "/online-exam/add-questions", icon: ListChecks },
       { title: "Online Exam Marks", url: "/online-exam/marks", icon: FileCheck },
     ],
   },

@@ -80,6 +80,9 @@ import GenerateMarksheets from "./pages/marksheet/GenerateMarksheets";
 
 // Settings
 import GeneralSettings from "./pages/settings/GeneralSettings";
+import PaymentGateway from "./pages/settings/PaymentGateway";
+import PaymentQRCode from "./pages/settings/PaymentQRCode";
+import BatchPaymentQR from "./pages/settings/BatchPaymentQR";
 
 const queryClient = new QueryClient();
 
@@ -165,6 +168,9 @@ const App = () => (
           
           {/* Settings */}
           <Route path="/settings/general" element={<GeneralSettings />} />
+          <Route path="/settings/payment-gateway" element={<PaymentGateway />} />
+          <Route path="/settings/payment-qr" element={<PaymentQRCode />} />
+          <Route path="/settings/batch-qr" element={<BatchPaymentQR />} />
           
           {/* Catch-all */}
           <Route path="*" element={<NotFound />} />
