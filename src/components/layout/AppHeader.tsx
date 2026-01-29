@@ -12,24 +12,12 @@ import {
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useTheme } from "next-themes";
 
 export function AppHeader() {
-  const [isDark, setIsDark] = useState(() => {
-    const saved = localStorage.getItem("theme");
-    return saved === "dark" || (!saved && window.matchMedia("(prefers-color-scheme: dark)").matches);
-  });
-
-  useEffect(() => {
-    const html = document.documentElement;
-    if (isDark) {
-      html.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      html.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-  }, [isDark]);
+  const { theme, setTheme } = useTheme();
+  const isDark = theme === "dark";
 
   return (
     <header className="sticky top-0 z-50 flex h-16 items-center justify-between border-b border-border bg-card px-4 shadow-sm">
@@ -57,7 +45,7 @@ export function AppHeader() {
         <Button
           variant="ghost"
           size="icon"
-          onClick={() => setIsDark(!isDark)}
+          onClick={() => setTheme(isDark ? "light" : "dark")}
           className="h-9 w-9"
         >
           {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
