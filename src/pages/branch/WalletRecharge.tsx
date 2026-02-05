@@ -6,8 +6,24 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { StatsCard } from "@/components/ui/StatsCard";
-import { Wallet, CreditCard, Building2, History, Plus, ArrowUpRight } from "lucide-react";
+ import { Wallet, CreditCard, Building2, History, Plus, ArrowUpRight, Search } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+ import { useState } from "react";
+ 
+ interface Institute {
+   id: string;
+   name: string;
+   directorName: string;
+   balance: number;
+ }
+ 
+ const institutesData: Institute[] = [
+   { id: "main", name: "Main Campus", directorName: "Dr. Rajesh Kumar", balance: 125000 },
+   { id: "north", name: "North Campus", directorName: "Mrs. Priya Sharma", balance: 85000 },
+   { id: "south", name: "South Campus", directorName: "Mr. Anand Patel", balance: 65000 },
+   { id: "east", name: "East Campus", directorName: "Dr. Sanjay Gupta", balance: 45000 },
+   { id: "west", name: "West Campus", directorName: "Mrs. Meera Singh", balance: 35000 },
+ ];
 
 const rechargeHistory = [
   { id: "1", branch: "Main Campus", amount: 50000, method: "UPI", date: "2024-01-15", status: "completed" },
@@ -20,6 +36,15 @@ const rechargeHistory = [
 const quickAmounts = [5000, 10000, 25000, 50000, 100000];
 
 export default function WalletRecharge() {
+   const [searchQuery, setSearchQuery] = useState("");
+   const [selectedInstitute, setSelectedInstitute] = useState<Institute | null>(null);
+ 
+   const filteredInstitutes = institutesData.filter(
+     (inst) =>
+       inst.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+       inst.directorName.toLowerCase().includes(searchQuery.toLowerCase())
+   );
+ 
   return (
     <AppLayout>
       <PageHeader
@@ -73,18 +98,42 @@ export default function WalletRecharge() {
             <CardContent className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-2">
-                  <Label htmlFor="branch">Select Branch *</Label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Choose branch" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="main">Main Campus (₹1,25,000)</SelectItem>
-                      <SelectItem value="north">North Campus (₹85,000)</SelectItem>
-                      <SelectItem value="south">South Campus (₹65,000)</SelectItem>
-                      <SelectItem value="east">East Campus (₹45,000)</SelectItem>
-                    </SelectContent>
-                  </Select>
+                   <Label htmlFor="searchInstitute">Search Institute *</Label>
+                   <div className="relative">
+                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                     <Input
+                       id="searchInstitute"
+                       placeholder="Search by name or director..."
+                       className="pl-9"
+                       value={searchQuery}
+                       onChange={(e) => setSearchQuery(e.target.value)}
+                     />
+                   </div>
+                   {searchQuery && filteredInstitutes.length > 0 && (
+                     <div className="border rounded-md mt-1 max-h-48 overflow-auto bg-background shadow-lg">
+                       {filteredInstitutes.map((inst) => (
+                         <div
+                           key={inst.id}
+                           className="p-3 hover:bg-muted cursor-pointer border-b last:border-b-0"
+                           onClick={() => {
+                             setSelectedInstitute(inst);
+                             setSearchQuery(inst.name);
+                           }}
+                         >
+                           <p className="font-medium text-sm">{inst.name}</p>
+                           <p className="text-xs text-muted-foreground">Director: {inst.directorName}</p>
+                           <p className="text-xs text-success">Balance: ₹{inst.balance.toLocaleString()}</p>
+                         </div>
+                       ))}
+                     </div>
+                   )}
+                   {selectedInstitute && (
+                     <div className="bg-muted/50 p-3 rounded-md mt-2">
+                       <p className="text-sm font-medium">{selectedInstitute.name}</p>
+                       <p className="text-xs text-muted-foreground">Director: {selectedInstitute.directorName}</p>
+                       <p className="text-xs text-success">Current Balance: ₹{selectedInstitute.balance.toLocaleString()}</p>
+                     </div>
+                   )}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="amount">Recharge Amount *</Label>
@@ -183,15 +232,13 @@ export default function WalletRecharge() {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {[
-                  { name: "Main Campus", balance: 125000 },
-                  { name: "North Campus", balance: 85000 },
-                  { name: "South Campus", balance: 65000 },
-                  { name: "East Campus", balance: 45000 },
-                ].map((branch) => (
-                  <div key={branch.name} className="flex items-center justify-between">
-                    <span className="text-sm">{branch.name}</span>
-                    <span className="font-medium text-success">₹{branch.balance.toLocaleString()}</span>
+                 {institutesData.map((inst) => (
+                   <div key={inst.id} className="flex items-center justify-between">
+                     <div>
+                       <span className="text-sm">{inst.name}</span>
+                       <p className="text-xs text-muted-foreground">{inst.directorName}</p>
+                     </div>
+                     <span className="font-medium text-success">₹{inst.balance.toLocaleString()}</span>
                   </div>
                 ))}
               </div>
