@@ -18,7 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Users, UserPlus, Clock, LogOut, Eye, Download, Printer } from "lucide-react";
+import { Users, UserPlus, Clock, LogOut, Eye, Download, Printer, MapPin, Phone } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 interface Visitor {
@@ -34,6 +34,9 @@ interface Visitor {
   status: "active" | "completed" | "pending";
   idType: string;
   idNumber: string;
+  enquiryReason: string;
+  location: string;
+  followUpDate: string | null;
 }
 
 const visitorsData: Visitor[] = [
@@ -50,6 +53,9 @@ const visitorsData: Visitor[] = [
     status: "completed",
     idType: "Aadhar Card",
     idNumber: "XXXX-XXXX-1234",
+    enquiryReason: "Looking for admission in Class 10 for son",
+    location: "Mumbai, Maharashtra",
+    followUpDate: "2024-01-28",
   },
   {
     id: "V002",
@@ -64,6 +70,9 @@ const visitorsData: Visitor[] = [
     status: "active",
     idType: "PAN Card",
     idNumber: "ABCDE1234F",
+    enquiryReason: "Fee discount enquiry for scholarship",
+    location: "Pune, Maharashtra",
+    followUpDate: "2024-01-26",
   },
   {
     id: "V003",
@@ -78,6 +87,9 @@ const visitorsData: Visitor[] = [
     status: "active",
     idType: "Driving License",
     idNumber: "DL-XXXX-1234",
+    enquiryReason: "Discussion about school infrastructure project",
+    location: "Delhi",
+    followUpDate: null,
   },
   {
     id: "V004",
@@ -92,6 +104,9 @@ const visitorsData: Visitor[] = [
     status: "completed",
     idType: "Voter ID",
     idNumber: "ABC1234567",
+    enquiryReason: "Complaint regarding student behavior issue",
+    location: "Thane, Maharashtra",
+    followUpDate: "2024-01-30",
   },
   {
     id: "V005",
@@ -106,6 +121,9 @@ const visitorsData: Visitor[] = [
     status: "completed",
     idType: "Aadhar Card",
     idNumber: "XXXX-XXXX-5678",
+    enquiryReason: "Stationery delivery for office",
+    location: "Navi Mumbai",
+    followUpDate: null,
   },
   {
     id: "V006",
@@ -120,6 +138,9 @@ const visitorsData: Visitor[] = [
     status: "pending",
     idType: "Passport",
     idNumber: "J1234567",
+    enquiryReason: "Teacher position interview",
+    location: "Bangalore, Karnataka",
+    followUpDate: "2024-01-25",
   },
 ];
 
@@ -158,6 +179,17 @@ const columns: Column<Visitor>[] = [
     sortable: true,
     cell: (visitor) => (
       <Badge variant="secondary">{visitor.purpose}</Badge>
+    ),
+  },
+  {
+    key: "location",
+    header: "Location",
+    sortable: true,
+    cell: (visitor) => (
+      <div className="flex items-center gap-1.5">
+        <MapPin className="h-3.5 w-3.5 text-muted-foreground" />
+        <span className="text-sm">{visitor.location}</span>
+      </div>
     ),
   },
   {
@@ -204,6 +236,26 @@ const columns: Column<Visitor>[] = [
     key: "status",
     header: "Status",
     cell: (visitor) => <StatusBadge status={visitor.status} />,
+  },
+  {
+    key: "followUpDate",
+    header: "Follow-up",
+    sortable: true,
+    cell: (visitor) => (
+      visitor.followUpDate ? (
+        <div className="flex items-center gap-1.5">
+          <Phone className="h-3.5 w-3.5 text-primary" />
+          <span className="text-sm">
+            {new Date(visitor.followUpDate).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+            })}
+          </span>
+        </div>
+      ) : (
+        <span className="text-xs text-muted-foreground">--</span>
+      )
+    ),
   },
 ];
 
@@ -404,6 +456,34 @@ export default function VisitorsInformation() {
                 <div className="space-y-1">
                   <p className="text-xs text-muted-foreground uppercase tracking-wide">Purpose</p>
                   <p className="font-medium">{selectedVisitor.purpose}</p>
+                </div>
+                <div className="space-y-1 col-span-2">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide">Enquiry Reason</p>
+                  <p className="font-medium">{selectedVisitor.enquiryReason}</p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide">Location</p>
+                  <p className="font-medium flex items-center gap-1.5">
+                    <MapPin className="h-3.5 w-3.5 text-muted-foreground" />
+                    {selectedVisitor.location}
+                  </p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide">Follow-up Date</p>
+                  <p className="font-medium flex items-center gap-1.5">
+                    {selectedVisitor.followUpDate ? (
+                      <>
+                        <Phone className="h-3.5 w-3.5 text-primary" />
+                        {new Date(selectedVisitor.followUpDate).toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
+                        })}
+                      </>
+                    ) : (
+                      <span className="text-muted-foreground">Not scheduled</span>
+                    )}
+                  </p>
                 </div>
                 <div className="space-y-1">
                   <p className="text-xs text-muted-foreground uppercase tracking-wide">Person to Meet</p>

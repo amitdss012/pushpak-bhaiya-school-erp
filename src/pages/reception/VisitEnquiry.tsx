@@ -15,6 +15,7 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Upload, Save, X, UserPlus, Clock, Calendar } from "lucide-react";
+import { MapPin, Phone } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -174,9 +175,44 @@ export default function VisitEnquiry() {
                     <Input id="noOfPersons" type="number" min="1" defaultValue="1" />
                   </div>
                 </div>
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div className="space-y-2">
+                    <Label htmlFor="enquiryReason">Enquiry Reason</Label>
+                    <Textarea id="enquiryReason" placeholder="Describe the reason for enquiry in detail..." rows={2} />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="location">Visitor Location / City</Label>
+                    <Input id="location" placeholder="Enter city or area" />
+                  </div>
+                </div>
                 <div className="space-y-2">
                   <Label htmlFor="remarks">Remarks / Notes</Label>
                   <Textarea id="remarks" placeholder="Any additional information about the visit..." rows={3} />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Phone className="h-5 w-5 text-primary" />
+                  Follow-up Details
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div className="space-y-2">
+                    <Label htmlFor="followUpDate">Follow-up Call Date</Label>
+                    <Input id="followUpDate" type="date" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="followUpTime">Preferred Time</Label>
+                    <Input id="followUpTime" type="time" />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="followUpNotes">Follow-up Notes</Label>
+                  <Textarea id="followUpNotes" placeholder="Any notes for the follow-up call..." rows={2} />
                 </div>
               </CardContent>
             </Card>
