@@ -95,12 +95,12 @@ export default function CreateCourse() {
                       <SelectValue placeholder="Select duration" />
                     </SelectTrigger>
                     <SelectContent>
+                      <SelectItem value="3months">3 Months</SelectItem>
                       <SelectItem value="6months">6 Months</SelectItem>
                       <SelectItem value="1year">1 Year</SelectItem>
                       <SelectItem value="2years">2 Years</SelectItem>
                       <SelectItem value="3years">3 Years</SelectItem>
                       <SelectItem value="4years">4 Years</SelectItem>
-                      <SelectItem value="5years">5 Years</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -162,6 +162,16 @@ export default function CreateCourse() {
                 <div className="space-y-2">
                   <Label htmlFor="labFee">Lab Fee (If Applicable)</Label>
                   <Input id="labFee" type="number" placeholder="e.g., 3000" />
+                </div>
+              </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="reExamFee">Re-Exam Fee</Label>
+                  <Input id="reExamFee" type="number" placeholder="e.g., 500" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="reAdmissionFee">Re-Admission Fee</Label>
+                  <Input id="reAdmissionFee" type="number" placeholder="e.g., 2500" />
                 </div>
               </div>
               <div className="space-y-2">

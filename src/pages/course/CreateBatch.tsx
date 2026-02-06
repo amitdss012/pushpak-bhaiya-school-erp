@@ -132,6 +132,22 @@ export default function CreateBatch() {
                     <Input placeholder="e.g., CS-2024-A" />
                   </div>
                   <div className="space-y-2">
+                    <Label>Select Branch *</Label>
+                    <Select>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select branch" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="main">Main Branch</SelectItem>
+                        <SelectItem value="north">North Campus</SelectItem>
+                        <SelectItem value="south">South Campus</SelectItem>
+                        <SelectItem value="east">East Campus</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div className="space-y-2">
                     <Label>Course *</Label>
                     <Select>
                       <SelectTrigger>
@@ -142,6 +158,21 @@ export default function CreateBatch() {
                         <SelectItem value="commerce">Commerce</SelectItem>
                         <SelectItem value="engineering">Engineering</SelectItem>
                         <SelectItem value="arts">Arts</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Department *</Label>
+                    <Select>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select department" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="science">Science</SelectItem>
+                        <SelectItem value="commerce">Commerce</SelectItem>
+                        <SelectItem value="arts">Arts</SelectItem>
+                        <SelectItem value="engineering">Engineering</SelectItem>
+                        <SelectItem value="medical">Medical</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -214,7 +245,7 @@ export default function CreateBatch() {
         }
       />
 
-      <div className="grid gap-4 md:grid-cols-4 mb-6">
+      <div className="grid gap-4 md:grid-cols-5 mb-6">
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
@@ -224,6 +255,32 @@ export default function CreateBatch() {
               <div>
                 <p className="text-2xl font-bold">{batchesData.length}</p>
                 <p className="text-sm text-muted-foreground">Total Batches</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-lg bg-secondary/10 flex items-center justify-center">
+                <BookOpen className="h-5 w-5 text-secondary-foreground" />
+              </div>
+              <div>
+                <p className="text-2xl font-bold">4</p>
+                <p className="text-sm text-muted-foreground">Total Branches</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-lg bg-accent/10 flex items-center justify-center">
+                <Calendar className="h-5 w-5 text-accent-foreground" />
+              </div>
+              <div>
+                <p className="text-2xl font-bold">3</p>
+                <p className="text-sm text-muted-foreground">Assigned Batches</p>
               </div>
             </div>
           </CardContent>
