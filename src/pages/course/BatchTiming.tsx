@@ -156,7 +156,21 @@ export default function BatchTiming() {
 
       <Card className="mb-6">
         <CardContent className="p-4">
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-4">
+            <div className="space-y-1">
+              <Label>Select Branch</Label>
+              <Select defaultValue="main">
+                <SelectTrigger className="w-48">
+                  <SelectValue placeholder="Select branch" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="main">Main Branch</SelectItem>
+                  <SelectItem value="north">North Campus</SelectItem>
+                  <SelectItem value="south">South Campus</SelectItem>
+                  <SelectItem value="east">East Campus</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
             <div className="space-y-1">
               <Label>Select Batch</Label>
               <Select value={selectedBatch} onValueChange={setSelectedBatch}>

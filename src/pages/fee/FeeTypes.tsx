@@ -34,6 +34,8 @@ const feeTypesData: FeeType[] = [
   { id: "6", name: "Sports Fee", code: "SF001", category: "Facility", defaultAmount: 1500, frequency: "Yearly", applicableTo: ["All Courses"], description: "Sports facilities and activities", status: "active" },
   { id: "7", name: "Transport Fee", code: "TRF001", category: "Optional", defaultAmount: 12000, frequency: "Yearly", applicableTo: ["All Courses"], description: "School bus transportation", status: "active" },
   { id: "8", name: "Hostel Fee", code: "HF001", category: "Optional", defaultAmount: 60000, frequency: "Yearly", applicableTo: ["All Courses"], description: "Hostel accommodation charges", status: "inactive" },
+  { id: "9", name: "Re-Exam Fee", code: "REF001", category: "Academic", defaultAmount: 500, frequency: "Per Exam", applicableTo: ["All Courses"], description: "Fee for re-examination attempts", status: "active" },
+  { id: "10", name: "Re-Admission Fee", code: "RAF001", category: "One-time", defaultAmount: 2500, frequency: "One-time", applicableTo: ["All Courses"], description: "Fee for re-admission after discontinuation", status: "active" },
 ];
 
 const columns: Column<FeeType>[] = [

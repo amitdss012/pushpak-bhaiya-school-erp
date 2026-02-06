@@ -149,7 +149,21 @@ export default function AssignCourseToBatch() {
             <CardDescription>Assign a course to a batch with selected subjects</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-4 md:grid-cols-3">
+              <div className="space-y-2">
+                <Label>Select Branch *</Label>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Choose a branch" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="main">Main Branch</SelectItem>
+                    <SelectItem value="north">North Campus</SelectItem>
+                    <SelectItem value="south">South Campus</SelectItem>
+                    <SelectItem value="east">East Campus</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
               <div className="space-y-2">
                 <Label>Select Course *</Label>
                 <Select value={selectedCourse} onValueChange={setSelectedCourse}>
