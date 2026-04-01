@@ -85,6 +85,31 @@ import PaymentGateway from "./pages/settings/PaymentGateway";
 import PaymentQRCode from "./pages/settings/PaymentQRCode";
 import BatchPaymentQR from "./pages/settings/BatchPaymentQR";
 
+// Partner Management
+import AddPartner from "./pages/partners/AddPartner";
+import AllPartners from "./pages/partners/AllPartners";
+import PartnerTransactions from "./pages/partners/PartnerTransactions";
+
+// Expense Management
+import VoucherHead from "./pages/expense/VoucherHead";
+import VoucherHeads from "./pages/expense/VoucherHeads";
+import DepositVoucher from "./pages/expense/DepositVoucher";
+import ExpenseVoucher from "./pages/expense/ExpenseVoucher";
+
+// Attendance Management
+import Attendance from "./pages/attendance/Attendance";
+import AttendanceReport from "./pages/attendance/AttendanceReport";
+import AttendanceLogs from "./pages/attendance/AttendanceLogs";
+
+// User Management
+import AllUsers from "./pages/user/AllUsers";
+import UserRoles from "./pages/user/UserRoles";
+import AccessControl from "./pages/user/AccessControl";
+
+// Session Year Management
+import AddSessionYear from "./pages/session/AddSessionYear";
+import AllSessionYears from "./pages/session/AllSessionYears";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -173,6 +198,31 @@ const App = () => (
           <Route path="/settings/payment-gateway" element={<PaymentGateway />} />
           <Route path="/settings/payment-qr" element={<PaymentQRCode />} />
           <Route path="/settings/batch-qr" element={<BatchPaymentQR />} />
+          
+          {/* Partner Management */}
+          <Route path="/partners/add" element={<AddPartner />} />
+          <Route path="/partners/all" element={<AllPartners />} />
+          <Route path="/partners/transactions" element={<PartnerTransactions />} />
+          
+          {/* Expense Management */}
+          <Route path="/expense/voucher-head" element={<VoucherHead />} />
+          <Route path="/expense/voucher-heads" element={<VoucherHeads />} />
+          <Route path="/expense/deposit-voucher" element={<DepositVoucher />} />
+          <Route path="/expense/expense-voucher" element={<ExpenseVoucher />} />
+          
+          {/* Attendance Management */}
+          <Route path="/attendance/mark" element={<Attendance />} />
+          <Route path="/attendance/report" element={<AttendanceReport />} />
+          <Route path="/attendance/logs" element={<AttendanceLogs />} />
+          
+          {/* User Management */}
+          <Route path="/user/all" element={<AllUsers />} />
+          <Route path="/user/roles" element={<UserRoles />} />
+          <Route path="/user/access-control" element={<AccessControl />} />
+          
+          {/* Session Year Management */}
+          <Route path="/session/add" element={<AddSessionYear />} />
+          <Route path="/session/all" element={<AllSessionYears />} />
           
           {/* Catch-all */}
           <Route path="*" element={<NotFound />} />

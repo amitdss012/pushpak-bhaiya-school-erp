@@ -32,6 +32,18 @@ import {
   Play,
   FileCheck,
   FileSpreadsheet,
+  Handshake,
+  ArrowRightLeft,
+  PiggyBank,
+  TrendingUp,
+  TrendingDown,
+  Camera,
+  FileBarChart,
+  History,
+  Shield,
+  KeyRound,
+  UserCog,
+  Plus,
 } from "lucide-react";
 import {
   Sidebar,
@@ -181,6 +193,51 @@ const menuItems: MenuItem[] = [
       { title: "Payment Gateway", url: "/settings/payment-gateway", icon: CreditCard },
       { title: "Payment QR Code", url: "/settings/payment-qr", icon: FileText },
       { title: "Batch Payment QR", url: "/settings/batch-qr", icon: FileText },
+    ],
+  },
+  {
+    title: "Partner Management",
+    icon: Handshake,
+    items: [
+      { title: "Add Partner", url: "/partners/add", icon: UserPlus },
+      { title: "All Partners", url: "/partners/all", icon: Users },
+      { title: "Partner Transactions", url: "/partners/transactions", icon: ArrowRightLeft },
+    ],
+  },
+  {
+    title: "Expense Management",
+    icon: PiggyBank,
+    items: [
+      { title: "Voucher Head", url: "/expense/voucher-head", icon: FileText },
+      { title: "All Voucher Heads", url: "/expense/voucher-heads", icon: ListChecks },
+      { title: "Deposit Voucher", url: "/expense/deposit-voucher", icon: TrendingUp },
+      { title: "Expense Voucher", url: "/expense/expense-voucher", icon: TrendingDown },
+    ],
+  },
+  {
+    title: "Attendance Management",
+    icon: Camera,
+    items: [
+      { title: "Mark Attendance", url: "/attendance/mark", icon: Camera },
+      { title: "Attendance Report", url: "/attendance/report", icon: FileBarChart },
+      { title: "Attendance Logs", url: "/attendance/logs", icon: History },
+    ],
+  },
+  {
+    title: "User Management",
+    icon: Shield,
+    items: [
+      { title: "All Users", url: "/user/all", icon: Users },
+      { title: "User Roles", url: "/user/roles", icon: UserCog },
+      { title: "Access Control", url: "/user/access-control", icon: KeyRound },
+    ],
+  },
+  {
+    title: "Session Year",
+    icon: Calendar,
+    items: [
+      { title: "Add Session Year", url: "/session/add", icon: Plus },
+      { title: "All Session Years", url: "/session/all", icon: ListChecks },
     ],
   },
 ];
