@@ -6,17 +6,24 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Search, Eye, Edit, Trash2, Calendar, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Plus, Eye, Edit, Trash2, Calendar, CheckCircle, Info, Clock, AlertTriangle } from "lucide-react";
 import { format } from "date-fns";
 
 interface SessionYear {
@@ -31,7 +38,6 @@ interface SessionYear {
   createdDate: string;
 }
 
-// Sample data - replace with actual API data
 const sampleSessionYears: SessionYear[] = [
   {
     id: "1",
@@ -41,7 +47,7 @@ const sampleSessionYears: SessionYear[] = [
     startDate: "2024-04-01",
     endDate: "2025-03-31",
     status: "active",
-    description: "Current academic session",
+    description: "Current academic session for the year 2024-25",
     createdDate: "2024-01-15",
   },
   {
@@ -52,28 +58,22 @@ const sampleSessionYears: SessionYear[] = [
     startDate: "2023-04-01",
     endDate: "2024-03-31",
     status: "closed",
-    description: "Previous academic session",
+    description: "Previous academic session completed",
     createdDate: "2023-01-10",
-  },
-  {
-    id: "3",
-    sessionName: "Session 2025-2026",
-    startYear: "2025",
-    endYear: "2026",
-    startDate: "2025-04-01",
-    endDate: "2026-03-31",
-    status: "upcoming",
-    description: "Next academic session",
-    createdDate: "2024-02-20",
   },
 ];
 
 const AllSessionYears = () => {
   const { toast } = useToast();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [sessionYears] = useState<SessionYear[]>(sampleSessionYears);
+  const [sessionYears, setSessionYears] = useState<SessionYear[]>(sampleSessionYears);
+  const [selectedSession, setSelectedSession] = useState<SessionYear | null>(null);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [formData, setFormData] = useState<Partial<SessionYear>>({});
 
   const handleDelete = (id: string) => {
+    setSessionYears(prev => prev.filter(s => s.id !== id));
     toast({
       title: "Session Deleted",
       description: "The session year has been removed successfully.",
@@ -81,255 +81,236 @@ const AllSessionYears = () => {
     });
   };
 
-  const getStatusBadgeClass = (status: string) => {
+  const handleEdit = (session: SessionYear) => {
+    setSelectedSession(session);
+    setFormData(session);
+    setIsEditModalOpen(true);
+  };
+
+  const handleView = (session: SessionYear) => {
+    setSelectedSession(session);
+    setIsViewModalOpen(true);
+  };
+
+  const handleUpdate = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSessionYears(prev =>
+      prev.map(s => (s.id === formData.id ? { ...s, ...formData } as SessionYear : s))
+    );
+    setIsEditModalOpen(false);
+    toast({
+      title: "Success",
+      description: "Session details updated successfully!",
+    });
+  };
+
+  const handleCreate = (e: React.FormEvent) => {
+    e.preventDefault();
+    const newSession: SessionYear = {
+      ...(formData as SessionYear),
+      id: Math.random().toString(36).substr(2, 9),
+      createdDate: new Date().toISOString().split("T")[0],
+    };
+    setSessionYears(prev => [newSession, ...prev]);
+    setIsCreateModalOpen(false);
+    setFormData({});
+    toast({
+      title: "Success",
+      description: "Academic session created successfully!",
+    });
+  };
+
+  const handleMakeCurrent = (id: string) => {
+    setSessionYears(prev =>
+      prev.map(s => ({
+        ...s,
+        status: s.id === id ? "active" : s.status === "active" ? "closed" : s.status
+      }))
+    );
+    toast({
+      title: "Status Updated",
+      description: "The selected session is now set as Active.",
+    });
+  };
+
+  const getStatusBadge = (status: string) => {
     switch (status) {
-      case "active":
-        return "bg-green-100 text-green-800";
-      case "inactive":
-        return "bg-gray-100 text-gray-800";
-      case "upcoming":
-        return "bg-blue-100 text-blue-800";
-      case "closed":
-        return "bg-red-100 text-red-800";
-      default:
-        return "bg-gray-100 text-gray-800";
+      case "active": return <Badge className="bg-green-100 text-green-800 border-green-200"><CheckCircle className="mr-1 h-3 w-3" /> Active</Badge>;
+      case "closed": return <Badge variant="secondary" className="bg-red-50 text-red-700 border-red-100"><Clock className="mr-1 h-3 w-3" /> Closed</Badge>;
+      case "upcoming": return <Badge variant="outline" className="text-blue-600 border-blue-200"><Calendar className="mr-1 h-3 w-3" /> Upcoming</Badge>;
+      default: return <Badge variant="outline">{status}</Badge>;
     }
   };
 
   const columns = [
-    {
-      key: "sessionName" as keyof SessionYear,
-      header: "Session Name",
-      cell: (item: SessionYear) => (
-        <div className="font-medium">{item.sessionName}</div>
-      ),
-    },
-    {
-      key: "startYear" as keyof SessionYear,
-      header: "Year Range",
-      cell: (item: SessionYear) => (
-        <span className="font-semibold">{item.startYear} - {item.endYear}</span>
-      ),
-    },
-    {
-      key: "startDate" as keyof SessionYear,
-      header: "Start Date",
-      cell: (item: SessionYear) => format(new Date(item.startDate), "dd MMM yyyy"),
-    },
-    {
-      key: "endDate" as keyof SessionYear,
-      header: "End Date",
-      cell: (item: SessionYear) => format(new Date(item.endDate), "dd MMM yyyy"),
-    },
-    {
-      key: "status" as keyof SessionYear,
-      header: "Status",
-      cell: (item: SessionYear) => (
-        <Badge className={getStatusBadgeClass(item.status)}>
-          {item.status === "active" && <CheckCircle className="mr-1 h-3 w-3" />}
-          {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
-        </Badge>
-      ),
-    },
-    {
-      key: "description" as keyof SessionYear,
-      header: "Description",
-      cell: (item: SessionYear) => (
-        <span className="text-sm text-muted-foreground max-w-[200px] truncate">
-          {item.description || "-"}
-        </span>
-      ),
-    },
-    {
-      key: "actions",
-      header: "Actions",
-      cell: (item: SessionYear) => (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <Eye className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-              <Link to={`/session/view/${item.id}`} className="flex items-center cursor-pointer">
-                <Eye className="mr-2 h-4 w-4" />
-                View Details
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link to={`/session/edit/${item.id}`} className="flex items-center cursor-pointer">
-                <Edit className="mr-2 h-4 w-4" />
-                Edit Session
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link to={`/session/make-current/${item.id}`} className="flex items-center cursor-pointer">
-                <CheckCircle className="mr-2 h-4 w-4" />
-                Make Current
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() => handleDelete(item.id)}
-              className="text-red-600 cursor-pointer"
-            >
-              <Trash2 className="mr-2 h-4 w-4" />
-              Delete Session
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      ),
-    },
+    { key: "sessionName", header: "Session Name", sortable: true },
+    { key: "startYear", header: "Range", cell: (item: SessionYear) => `${item.startYear} - ${item.endYear}` },
+    { key: "startDate", header: "Start Date", cell: (item: SessionYear) => format(new Date(item.startDate), "dd MMM yyyy") },
+    { key: "endDate", header: "End Date", cell: (item: SessionYear) => format(new Date(item.endDate), "dd MMM yyyy") },
+    { key: "status", header: "Status", cell: (item: SessionYear) => getStatusBadge(item.status) },
   ];
 
-  const filteredSessions = sessionYears.filter((session) =>
-    session.sessionName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    session.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    session.startYear.includes(searchTerm) ||
-    session.endYear.includes(searchTerm)
-  );
-
-  // Calculate statistics
-  const totalSessions = sessionYears.length;
-  const activeSessions = sessionYears.filter(s => s.status === "active").length;
-  const upcomingSessions = sessionYears.filter(s => s.status === "upcoming").length;
-  const closedSessions = sessionYears.filter(s => s.status === "closed").length;
+  const handleActions = (item: SessionYear) => [
+    { label: "View Details", onClick: () => handleView(item) },
+    { label: "Edit Session", onClick: () => handleEdit(item) },
+    ...(item.status !== "active" ? [{ label: "Make Current", onClick: () => handleMakeCurrent(item.id) }] : []),
+    { label: "Delete", onClick: () => handleDelete(item.id), destructive: true }
+  ];
 
   return (
     <AppLayout>
       <div className="container mx-auto p-6">
         <PageHeader
-          title="All Session Years"
-          description="Manage and view all academic session years"
-          breadcrumbs={[
-            { label: "Session Year", href: "/session/all" },
-            { label: "All Session Years" },
-          ]}
+          title="Session Management"
+          description="Manage and view academic session years"
+          breadcrumbs={[{ label: "Session Year", href: "/session/all" }, { label: "All Sessions" }]}
           actions={
-            <Button asChild>
-              <Link to="/session/add">
-                <Plus className="mr-2 h-4 w-4" />
-                Add New Session
-              </Link>
+            <Button onClick={() => { setFormData({ status: "upcoming" }); setIsCreateModalOpen(true); }}>
+              <Plus className="mr-2 h-4 w-4" />
+              Add New Session
             </Button>
           }
         />
 
-        {/* Statistics Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium">Total Sessions</CardTitle>
               <Calendar className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{totalSessions}</div>
-              <p className="text-xs text-muted-foreground mt-1">
-                Total session years
-              </p>
+              <div className="text-2xl font-bold">{sessionYears.length}</div>
             </CardContent>
           </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <Card className="border-l-4 border-l-green-500">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium">Active Session</CardTitle>
-              <CheckCircle className="h-4 w-4 text-green-600" />
+              <CheckCircle className="h-4 w-4 text-green-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-green-600">{activeSessions}</div>
-              <p className="text-xs text-muted-foreground mt-1">
-                Currently running
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Upcoming</CardTitle>
-              <Calendar className="h-4 w-4 text-blue-600" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-blue-600">{upcomingSessions}</div>
-              <p className="text-xs text-muted-foreground mt-1">
-                Future sessions
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Closed</CardTitle>
-              <Calendar className="h-4 w-4 text-red-600" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-red-600">{closedSessions}</div>
-              <p className="text-xs text-muted-foreground mt-1">
-                Completed sessions
-              </p>
+              <div className="text-2xl font-bold text-green-600">
+                 {sessionYears.find(s => s.status === "active")?.sessionName || "None"}
+              </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Filters and Table */}
-        <Card className="mt-6">
-          <CardHeader>
-            <CardTitle>Filter Sessions</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="mb-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search by session name, year, or description..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
-                />
+        <div className="mt-8">
+          <DataTable
+            columns={columns}
+            data={sessionYears}
+            searchPlaceholder="Search sessions by name or year..."
+            actions={handleActions}
+          />
+        </div>
+      </div>
+
+      {/* View Modal */}
+      <Dialog open={isViewModalOpen} onOpenChange={setIsViewModalOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Session Details</DialogTitle>
+          </DialogHeader>
+          {selectedSession && (
+            <div className="space-y-4 py-4">
+              <div className="flex justify-between items-center border-b pb-2">
+                 <span className="text-2xl font-bold">{selectedSession.sessionName}</span>
+                 {getStatusBadge(selectedSession.status)}
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                 <div>
+                    <Label className="text-muted-foreground text-xs uppercase">Period</Label>
+                    <p className="font-medium text-sm">{format(new Date(selectedSession.startDate), "MMM dd, yyyy")} to {format(new Date(selectedSession.endDate), "MMM dd, yyyy")}</p>
+                 </div>
+                 <div>
+                    <Label className="text-muted-foreground text-xs uppercase">Year Span</Label>
+                    <p className="font-medium text-sm">{selectedSession.startYear} - {selectedSession.endYear}</p>
+                 </div>
+              </div>
+              <div className="bg-muted/50 p-3 rounded-lg flex gap-3">
+                 <Info className="h-5 w-5 text-primary shrink-0" />
+                 <p className="text-sm text-muted-foreground italic">"{selectedSession.description || "No additional description provided for this academic session."}"</p>
               </div>
             </div>
+          )}
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsViewModalOpen(false)}>Close</Button>
+            <Button onClick={() => { setIsViewModalOpen(false); handleEdit(selectedSession!); }}>Edit Session</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
-            <div className="flex items-center justify-between pt-4 border-t">
-              <p className="text-sm text-muted-foreground">
-                Showing {filteredSessions.length} of {totalSessions} sessions
-              </p>
+      {/* Create/Edit Modal */}
+      <Dialog open={isCreateModalOpen || isEditModalOpen} onOpenChange={(open) => { if(!open) { setIsCreateModalOpen(false); setIsEditModalOpen(false); } }}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>{isCreateModalOpen ? "New Session Year" : "Update Session"}</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={isCreateModalOpen ? handleCreate : handleUpdate} className="space-y-4 py-2">
+            <div className="space-y-2">
+              <Label htmlFor="sessionName">Session Name *</Label>
+              <Input
+                id="sessionName"
+                value={formData.sessionName || ""}
+                onChange={(e) => setFormData({ ...formData, sessionName: e.target.value })}
+                placeholder="e.g. Session 2024-2025"
+                required
+              />
             </div>
-          </CardContent>
-        </Card>
-
-        {/* Data Table */}
-        <Card className="mt-6">
-          <CardHeader>
-            <CardTitle>Session Years List</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <DataTable
-              columns={columns}
-              data={filteredSessions}
-              searchable={false}
-              emptyMessage="No session years found"
-            />
-          </CardContent>
-        </Card>
-
-        {/* Info Card */}
-        <Card className="mt-6">
-          <CardHeader>
-            <CardTitle>About Session Years</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-sm text-muted-foreground">
-            <p>• Session years define the academic period for all activities</p>
-            <p>• Student admissions are linked to specific session years</p>
-            <p>• Exams, fees, and attendance are tracked per session</p>
-            <p>• Only one session can be active at any given time</p>
-            <p>• Closed sessions are archived but remain accessible for reports</p>
-          </CardContent>
-        </Card>
-      </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>Start Year</Label>
+                <Input value={formData.startYear || ""} onChange={e => setFormData({...formData, startYear: e.target.value})} type="number" />
+              </div>
+              <div className="space-y-2">
+                <Label>End Year</Label>
+                <Input value={formData.endYear || ""} onChange={e => setFormData({...formData, endYear: e.target.value})} type="number" />
+              </div>
+              <div className="space-y-2">
+                <Label>Start Date</Label>
+                <Input value={formData.startDate || ""} onChange={e => setFormData({...formData, startDate: e.target.value})} type="date" required />
+              </div>
+              <div className="space-y-2">
+                <Label>End Date</Label>
+                <Input value={formData.endDate || ""} onChange={e => setFormData({...formData, endDate: e.target.value})} type="date" required />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label>Status</Label>
+              <Select value={formData.status} onValueChange={val => setFormData({...formData, status: val as any})}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="active">Active</SelectItem>
+                  <SelectItem value="inactive">Inactive</SelectItem>
+                  <SelectItem value="upcoming">Upcoming</SelectItem>
+                  <SelectItem value="closed">Closed</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label>Description</Label>
+              <textarea
+                className="w-full min-h-[80px] rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                value={formData.description || ""}
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              />
+            </div>
+            {formData.status === "active" && (
+                <div className="flex items-center gap-2 text-xs bg-yellow-50 text-yellow-700 p-2 rounded border border-yellow-100">
+                    <AlertTriangle className="h-4 w-4" />
+                    Note: Setting this as Active will automatically close any other active sessions.
+                </div>
+            )}
+            <DialogFooter>
+              <Button type="button" variant="outline" onClick={() => { setIsCreateModalOpen(false); setIsEditModalOpen(false); }}>Cancel</Button>
+              <Button type="submit">{isCreateModalOpen ? "Create Session" : "Update Session"}</Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
     </AppLayout>
   );
 };
 
 export default AllSessionYears;
+

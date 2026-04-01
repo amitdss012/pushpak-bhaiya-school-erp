@@ -107,7 +107,7 @@ const AllUsers = () => {
   const [filterRole, setFilterRole] = useState("all");
   const [filterStatus, setFilterStatus] = useState("all");
   const [users] = useState<User[]>(sampleUsers);
-  
+
   // Dialog states
   const [isViewDialogOpen, setIsViewDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -257,10 +257,10 @@ const AllUsers = () => {
       user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.userId.toLowerCase().includes(searchTerm.toLowerCase());
-    
+
     const matchesRole = filterRole === "all" || user.role === filterRole;
     const matchesStatus = filterStatus === "all" || user.status === filterStatus;
-    
+
     return matchesSearch && matchesRole && matchesStatus;
   });
 
@@ -437,9 +437,9 @@ const AllUsers = () => {
                     <p className="text-sm font-medium">{selectedUser.name}</p>
                   </div>
                 </div>
-                
+
                 <Separator />
-                
+
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <Label className="text-xs font-semibold uppercase text-muted-foreground flex items-center gap-2">
@@ -454,9 +454,9 @@ const AllUsers = () => {
                     <p className="text-sm">{selectedUser.phone}</p>
                   </div>
                 </div>
-                
+
                 <Separator />
-                
+
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <Label className="text-xs font-semibold uppercase text-muted-foreground">Role</Label>
@@ -470,9 +470,9 @@ const AllUsers = () => {
                     <p className="text-sm font-medium mt-1">{selectedUser.department}</p>
                   </div>
                 </div>
-                
+
                 <Separator />
-                
+
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <Label className="text-xs font-semibold uppercase text-muted-foreground">Status</Label>
@@ -486,9 +486,9 @@ const AllUsers = () => {
                     <p className="text-sm">{selectedUser.lastLogin || 'Never'}</p>
                   </div>
                 </div>
-                
+
                 <Separator />
-                
+
                 <div className="space-y-1.5">
                   <Label className="text-xs font-semibold uppercase text-muted-foreground">Account Created</Label>
                   <p className="text-sm">{selectedUser.createdDate}</p>
@@ -536,7 +536,7 @@ const AllUsers = () => {
                     />
                   </div>
                 </div>
-                
+
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="edit-phone">Phone</Label>
@@ -553,7 +553,7 @@ const AllUsers = () => {
                     />
                   </div>
                 </div>
-                
+
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="edit-role">Role</Label>
@@ -631,9 +631,9 @@ const AllUsers = () => {
                     </Badge>
                   </div>
                 </div>
-                
+
                 <Separator />
-                
+
                 <div className="space-y-3">
                   <Label className="text-base font-semibold">Available Roles</Label>
                   <div className="space-y-2">
@@ -659,7 +659,7 @@ const AllUsers = () => {
                     ))}
                   </div>
                 </div>
-                
+
                 <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
                   <p className="text-sm text-blue-800">
                     <strong>Note:</strong> Changing a user's role will immediately affect their access permissions in the system.

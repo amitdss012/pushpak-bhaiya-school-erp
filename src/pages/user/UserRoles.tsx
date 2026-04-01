@@ -144,8 +144,8 @@ const UserRoles = () => {
       header: "Actions",
       cell: (item: Role) => (
         <div className="flex items-center gap-2">
-          <Button 
-            variant="ghost" 
+          <Button
+            variant="ghost"
             size="sm"
             onClick={() => {
               setSelectedRole(item);
@@ -349,8 +349,8 @@ const UserRoles = () => {
               <form className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="edit-roleName">Role Name</Label>
-                  <Input 
-                    id="edit-roleName" 
+                  <Input
+                    id="edit-roleName"
                     defaultValue={selectedRole.roleName}
                     disabled={selectedRole.isDefault}
                   />
@@ -360,16 +360,16 @@ const UserRoles = () => {
                     </p>
                   )}
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="edit-description">Description</Label>
-                  <Input 
-                    id="edit-description" 
+                  <Input
+                    id="edit-description"
                     defaultValue={selectedRole.description}
                     disabled={selectedRole.isDefault}
                   />
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label>Permissions</Label>
                   <div className="grid grid-cols-2 gap-3 max-h-[300px] overflow-y-auto p-2 border rounded-md">
@@ -384,12 +384,12 @@ const UserRoles = () => {
                       "Manage Leave"
                     ].map((permission) => (
                       <div key={permission} className="flex items-center space-x-2">
-                        <Checkbox 
-                          id={`edit-perm-${permission}`} 
+                        <Checkbox
+                          id={`edit-perm-${permission}`}
                           defaultChecked={selectedRole.permissions.includes(permission.toLowerCase().replace(/ /g, '_')) || selectedRole.permissions.includes('all')}
                           disabled={selectedRole.isDefault}
                         />
-                        <Label 
+                        <Label
                           htmlFor={`edit-perm-${permission}`}
                           className="text-sm font-normal cursor-pointer"
                         >
@@ -405,7 +405,7 @@ const UserRoles = () => {
               <Button variant="outline" onClick={() => setIsEditDialogOpen(false)}>
                 Cancel
               </Button>
-              <Button 
+              <Button
                 onClick={() => {
                   toast({
                     title: "Role Updated",
