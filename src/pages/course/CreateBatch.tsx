@@ -187,6 +187,17 @@ export default function CreateBatch() {
                     <Input type="date" />
                   </div>
                 </div>
+                <div className="space-y-2">
+                  <Label>Batch Subjects</Label>
+                  <div className="grid grid-cols-3 gap-3 p-3 border rounded-lg bg-muted/30">
+                    {["Mathematics", "Physics", "Chemistry", "Biology", "English", "CS"].map((subject) => (
+                      <div key={subject} className="flex items-center gap-2">
+                        <Switch id={`batch-${subject}`} />
+                        <Label htmlFor={`batch-${subject}`} className="text-xs cursor-pointer">{subject}</Label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
                 <div className="grid gap-4 md:grid-cols-3">
                   <div className="space-y-2">
                     <Label>Capacity *</Label>

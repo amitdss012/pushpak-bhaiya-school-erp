@@ -2,6 +2,7 @@ import { AppLayout } from "@/components/layout/AppLayout";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -115,6 +116,8 @@ export default function AssignCourseToBatch() {
   const [selectedCourse, setSelectedCourse] = useState("");
   const [selectedBatch, setSelectedBatch] = useState("");
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
+  const [newSubject, setNewSubject] = useState("");
+  const [subjectsList, setSubjectsList] = useState(availableSubjects);
 
   const handleActions = (assignment: CourseAssignment) => [
     { label: "View Details", onClick: () => console.log("View", assignment.id) },
@@ -126,6 +129,14 @@ export default function AssignCourseToBatch() {
     setSelectedSubjects((prev) =>
       prev.includes(subject) ? prev.filter((s) => s !== subject) : [...prev, subject]
     );
+  };
+
+  const addSubject = () => {
+    if (newSubject.trim() && !subjectsList.includes(newSubject.trim())) {
+      setSubjectsList((prev) => [...prev, newSubject.trim()]);
+      setSelectedSubjects((prev) => [...prev, newSubject.trim()]);
+      setNewSubject("");
+    }
   };
 
   return (
@@ -196,17 +207,30 @@ export default function AssignCourseToBatch() {
               </div>
             </div>
 
-            <div className="space-y-2">
-              <Label>Select Subjects</Label>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <Label>Select Subjects</Label>
+                <div className="flex gap-2 max-w-xs">
+                  <Input 
+                    placeholder="New subject name" 
+                    value={newSubject}
+                    onChange={(e) => setNewSubject(e.target.value)}
+                    className="h-8"
+                  />
+                  <Button size="sm" variant="outline" onClick={addSubject} className="h-8">
+                    Create Subject
+                  </Button>
+                </div>
+              </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 p-4 border rounded-lg">
-                {availableSubjects.map((subject) => (
+                {subjectsList.map((subject) => (
                   <div key={subject} className="flex items-center space-x-2">
                     <Checkbox
                       id={subject}
                       checked={selectedSubjects.includes(subject)}
                       onCheckedChange={() => toggleSubject(subject)}
                     />
-                    <label htmlFor={subject} className="text-sm cursor-pointer">
+                    <label htmlFor={subject} className="text-sm cursor-pointer line-clamp-1">
                       {subject}
                     </label>
                   </div>

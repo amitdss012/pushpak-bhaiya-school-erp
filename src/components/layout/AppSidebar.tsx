@@ -119,10 +119,10 @@ const menuItems: MenuItem[] = [
     title: "Student Management",
     icon: GraduationCap,
     items: [
-      { title: "Add Student", url: "/student/add", icon: UserPlus },
+      { title: "Admission Form", url: "/student/admission-form", icon: FileText },
+      // { title: "Add Student", url: "/student/add", icon: UserPlus },
       { title: "View Students", url: "/student/view", icon: Users },
       { title: "Online Admission List", url: "/student/online-admissions", icon: Globe },
-      { title: "Admission Form", url: "/student/admission-form", icon: FileText },
     ],
   },
   {

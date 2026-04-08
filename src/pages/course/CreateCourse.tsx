@@ -198,14 +198,26 @@ export default function CreateCourse() {
         <div className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Course Image</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <BookOpen className="h-5 w-5" />
+                Course Subjects
+              </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="border-2 border-dashed border-border rounded-lg p-8 text-center">
-                <Upload className="h-10 w-10 mx-auto text-muted-foreground mb-2" />
-                <p className="text-sm text-muted-foreground mb-2">Upload course image</p>
-                <Button variant="outline" size="sm">Choose File</Button>
-                <p className="text-xs text-muted-foreground mt-2">PNG, JPG up to 2MB</p>
+            <CardContent className="space-y-4">
+              <div className="space-y-3">
+                <Label>Select Subjects</Label>
+                <div className="grid grid-cols-2 gap-2">
+                  {["Mathematics", "Physics", "Chemistry", "Biology", "English", "History", "Geography", "Computer Info"].map((subject) => (
+                    <div key={subject} className="flex items-center gap-2">
+                      <Switch id={subject} />
+                      <Label htmlFor={subject} className="text-sm font-normal cursor-pointer">{subject}</Label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="space-y-2 pt-2 border-t">
+                <Label htmlFor="otherSubjects">Other Subjects</Label>
+                <Textarea id="otherSubjects" placeholder="Enter other subjects separated by commas" rows={2} />
               </div>
             </CardContent>
           </Card>

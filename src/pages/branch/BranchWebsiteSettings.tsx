@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Globe, Palette, Layout, Image, Share2, Upload, Save } from "lucide-react";
+import { Globe, Image, Share2, Upload, Save, Calendar } from "lucide-react";
 
 export default function BranchWebsiteSettings() {
   return (
@@ -29,19 +29,12 @@ export default function BranchWebsiteSettings() {
       />
 
       <Tabs defaultValue="general" className="space-y-6">
-        <TabsList className="grid w-full max-w-2xl grid-cols-5">
+        <TabsList className="grid w-full max-w-xl grid-cols-3">
           <TabsTrigger value="general" className="gap-2">
             <Globe className="h-4 w-4" />
             General
           </TabsTrigger>
-          <TabsTrigger value="appearance" className="gap-2">
-            <Palette className="h-4 w-4" />
-            Appearance
-          </TabsTrigger>
-          <TabsTrigger value="layout" className="gap-2">
-            <Layout className="h-4 w-4" />
-            Layout
-          </TabsTrigger>
+
           <TabsTrigger value="media" className="gap-2">
             <Image className="h-4 w-4" />
             Media
@@ -170,156 +163,42 @@ export default function BranchWebsiteSettings() {
                 </div>
               </CardContent>
             </Card>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="appearance">
-          <div className="grid gap-6 lg:grid-cols-2">
-            <Card>
-              <CardHeader>
-                <CardTitle>Color Theme</CardTitle>
-                <CardDescription>Customize your website colors</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid gap-4 md:grid-cols-2">
-                  <div className="space-y-2">
-                    <Label>Primary Color</Label>
-                    <div className="flex gap-2">
-                      <div className="h-10 w-10 rounded-lg bg-primary border" />
-                      <Input defaultValue="#4F46E5" />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label>Secondary Color</Label>
-                    <div className="flex gap-2">
-                      <div className="h-10 w-10 rounded-lg bg-secondary border" />
-                      <Input defaultValue="#F3F4F6" />
-                    </div>
-                  </div>
-                </div>
-                <div className="grid gap-4 md:grid-cols-2">
-                  <div className="space-y-2">
-                    <Label>Accent Color</Label>
-                    <div className="flex gap-2">
-                      <div className="h-10 w-10 rounded-lg bg-accent border" />
-                      <Input defaultValue="#10B981" />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label>Text Color</Label>
-                    <div className="flex gap-2">
-                      <div className="h-10 w-10 rounded-lg bg-foreground border" />
-                      <Input defaultValue="#111827" />
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>Typography</CardTitle>
-                <CardDescription>Set your website fonts</CardDescription>
+                <CardTitle>Account Details</CardTitle>
+                <CardDescription>View your registration and validity information</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label>Heading Font</Label>
-                  <Select defaultValue="inter">
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="inter">Inter</SelectItem>
-                      <SelectItem value="poppins">Poppins</SelectItem>
-                      <SelectItem value="roboto">Roboto</SelectItem>
-                      <SelectItem value="opensans">Open Sans</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label>Body Font</Label>
-                  <Select defaultValue="inter">
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="inter">Inter</SelectItem>
-                      <SelectItem value="poppins">Poppins</SelectItem>
-                      <SelectItem value="roboto">Roboto</SelectItem>
-                      <SelectItem value="opensans">Open Sans</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label>Base Font Size</Label>
-                  <Select defaultValue="16">
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="14">14px</SelectItem>
-                      <SelectItem value="16">16px</SelectItem>
-                      <SelectItem value="18">18px</SelectItem>
-                    </SelectContent>
-                  </Select>
+                <div className="grid gap-4 md:grid-cols-3">
+                  <div className="space-y-2">
+                    <Label htmlFor="registrationDate">Registration Date</Label>
+                    <div className="relative">
+                      <Input id="registrationDate" type="date" defaultValue="2024-01-01" />
+                      <Calendar className="absolute right-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="expiryDate">Expiry Date</Label>
+                    <div className="relative">
+                      <Input id="expiryDate" type="date" defaultValue="2025-01-01" />
+                      <Calendar className="absolute right-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="renewalDate">Renewal Date</Label>
+                    <div className="relative">
+                      <Input id="renewalDate" type="date" defaultValue="2024-12-25" />
+                      <Calendar className="absolute right-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
           </div>
         </TabsContent>
 
-        <TabsContent value="layout">
-          <Card>
-            <CardHeader>
-              <CardTitle>Page Layout</CardTitle>
-              <CardDescription>Configure your website layout options</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <Label>Header Style</Label>
-                  <Select defaultValue="sticky">
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="sticky">Sticky Header</SelectItem>
-                      <SelectItem value="static">Static Header</SelectItem>
-                      <SelectItem value="transparent">Transparent Header</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label>Footer Style</Label>
-                  <Select defaultValue="standard">
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="standard">Standard Footer</SelectItem>
-                      <SelectItem value="minimal">Minimal Footer</SelectItem>
-                      <SelectItem value="expanded">Expanded Footer</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-              <div className="flex items-center justify-between">
-                <div>
-                  <Label>Show Breadcrumbs</Label>
-                  <p className="text-xs text-muted-foreground">Display navigation breadcrumbs</p>
-                </div>
-                <Switch defaultChecked />
-              </div>
-              <div className="flex items-center justify-between">
-                <div>
-                  <Label>Show Sidebar</Label>
-                  <p className="text-xs text-muted-foreground">Display sidebar on inner pages</p>
-                </div>
-                <Switch />
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+
 
         <TabsContent value="media">
           <div className="grid gap-6 lg:grid-cols-2">

@@ -121,7 +121,7 @@ export default function StudentAdmissionForm() {
                       </Select>
                     </div>
                   </div>
-                  <div className="grid gap-4 md:grid-cols-2">
+                  <div className="grid gap-4 md:grid-cols-3">
                     <div className="space-y-2">
                       <Label>Nationality *</Label>
                       <Select>
@@ -138,8 +138,6 @@ export default function StudentAdmissionForm() {
                       <Label>Religion</Label>
                       <Input placeholder="Religion" />
                     </div>
-                  </div>
-                  <div className="grid gap-4 md:grid-cols-2">
                     <div className="space-y-2">
                       <Label>Category</Label>
                       <Select>
@@ -155,9 +153,19 @@ export default function StudentAdmissionForm() {
                         </SelectContent>
                       </Select>
                     </div>
+                  </div>
+                  <div className="grid gap-4 md:grid-cols-3">
                     <div className="space-y-2">
                       <Label>Aadhar Number</Label>
                       <Input placeholder="XXXX XXXX XXXX" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>APAAR Number</Label>
+                      <Input placeholder="Enter APAAR Number" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Date of Admission</Label>
+                      <Input type="date" />
                     </div>
                   </div>
                 </div>
@@ -173,13 +181,17 @@ export default function StudentAdmissionForm() {
 
               <div className="space-y-4">
                 <h4 className="font-medium">Contact Information</h4>
-                <div className="grid gap-4 md:grid-cols-2">
+                <div className="grid gap-4 md:grid-cols-3">
                   <div className="space-y-2">
                     <Label>Email Address *</Label>
                     <Input type="email" placeholder="email@example.com" />
                   </div>
                   <div className="space-y-2">
                     <Label>Mobile Number *</Label>
+                    <Input placeholder="+91 XXXXX XXXXX" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Alternate Number</Label>
                     <Input placeholder="+91 XXXXX XXXXX" />
                   </div>
                 </div>
@@ -438,14 +450,12 @@ export default function StudentAdmissionForm() {
             <CardContent>
               <div className="grid gap-6 md:grid-cols-2">
                 {[
-                  { name: "Passport Photo", required: true, uploaded: true },
                   { name: "10th Marksheet", required: true, uploaded: true },
                   { name: "12th Marksheet", required: true, uploaded: false },
                   { name: "Transfer Certificate", required: true, uploaded: false },
-                  { name: "Migration Certificate", required: false, uploaded: false },
                   { name: "Aadhar Card", required: true, uploaded: true },
+                  { name: "APAAR Card", required: true, uploaded: false },
                   { name: "Caste Certificate", required: false, uploaded: false },
-                  { name: "Income Certificate", required: false, uploaded: false },
                 ].map((doc) => (
                   <div key={doc.name} className="flex items-center justify-between p-4 border rounded-lg">
                     <div className="flex items-center gap-3">
